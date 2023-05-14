@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\NftRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,6 +27,14 @@ class Nft
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $launchDate = null;
+
+    #[ORM\OneToMany(mappedBy: 'nft', targetEntity: NftPrice::class)]
+    private Collection $nftPrices;
+
+    public function __construct()
+    {
+        $this->nftPrices = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +85,36 @@ class Nft
     public function setLaunchDate(\DateTimeInterface $launchDate): self
     {
         $this->launchDate = $launchDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, NftPrice>
+     */
+    public function getNftPrices(): Collection
+    {
+        return $this->nftPrices;
+    }
+
+    public function addNftPrice(NftPrice $nftPrice): self
+    {
+        if (!$this->nftPrices->contains($nftPrice)) {
+            $this->nftPrices->add($nftPrice);
+            $nftPrice->setNft($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNftPrice(NftPrice $nftPrice): self
+    {
+        if ($this->nftPrices->removeElement($nftPrice)) {
+            // set the owning side to null (unless already changed)
+            if ($nftPrice->getNft() === $this) {
+                $nftPrice->setNft(null);
+            }
+        }
 
         return $this;
     }
