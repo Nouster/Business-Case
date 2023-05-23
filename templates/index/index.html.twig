@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Subscribe {% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="mb-5 text-center">Subscription</h1>
+        
+        {{ form_start(form) }}
+        
+        {{ form_row(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Enter your email'}}) }}
+        {{ form_row(form.password, {'attr': {'class': 'form-control', 'placeholder': 'Enter your password'}}) }}
+        {{ form_row(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Enter your name'}}) }}
+        {{ form_row(form.firstName, {'attr': {'class': 'form-control', 'placeholder': 'Enter your first name'}}) }}
+        {{ form_row(form.birthdate, {'attr': {'class': 'form-control', 'placeholder': 'Select your birthdate'}}) }}
+        {{ form_row(form.address, {'attr': {'class': 'form-control', 'placeholder': 'Enter your address'}}) }}
+        {{ form_row(form.zipCode, {'attr': {'class': 'form-control', 'placeholder': 'Enter your ZIP code'}}) }}
+        {{ form_row(form.genre, {'label': 'Select your gender', 'attr': {'class': 'form-control'}}) }}
+        
+        {{ form_row(form.Register, {'label': 'Register', 'attr': {'class': 'btn btn-primary'}}) }}
+        
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+
